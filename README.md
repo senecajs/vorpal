@@ -1,5 +1,7 @@
 # Vorpal
 
+# FORK: minor updates to resolve security issues for seneca-repl
+
 
 [![Build Status](https://travis-ci.org/dthree/vorpal.svg)](https://travis-ci.org/dthree/vorpal/)
 <a href="https://www.npmjs.com/package/vorpal">
