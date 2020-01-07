@@ -1,6 +1,6 @@
 {
   "name": "@seneca/vorpal",
-  "version": "2.0.2",
+  "version": "2.1.0",
   "description": "Node's first framework for building immersive CLI apps.",
   "main": "./dist/vorpal.js",
   "scripts": {
