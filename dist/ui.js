@@ -38,6 +38,8 @@ var UI = function (_EventEmitter) {
 
     var self = _this;
 
+    _this._console = console;
+
     // Attached vorpal instance. The UI can
     // only attach to one instance of Vorpal
     // at a time, and directs all events to that
@@ -206,7 +208,7 @@ var UI = function (_EventEmitter) {
         this.setDelimiter(options.message);
       }
       if (this._midPrompt) {
-        console.log('Prompt called when mid prompt...');
+        this._console.log('Prompt called when mid prompt...');
         throw new Error('UI Prompt called when already mid prompt.');
       }
       this._midPrompt = true;
@@ -231,7 +233,7 @@ var UI = function (_EventEmitter) {
           // this._activePrompt = prompt._activePrompt;
         }, 100);
       } catch (e) {
-        console.log('Vorpal Prompt error:', e);
+        this._console.log('Vorpal Prompt error:', e);
       }
       return prompt;
     }
@@ -441,14 +443,14 @@ var UI = function (_EventEmitter) {
       args = util.fixArgsForApply(args);
       if (this.midPrompt()) {
         var data = this.pause();
-        console.log.apply(console.log, args);
+        this._console.log.apply(this._console.log, args);
         if (typeof data !== 'undefined' && data !== false) {
           this.resume(data);
         } else {
-          console.log('Log got back \'false\' as data. This shouldn\'t happen.', data);
+          this._console.log('Log got back \'false\' as data. This shouldn\'t happen.', data);
         }
       } else {
-        console.log.apply(console.log, args);
+        this._console.log.apply(this._console.log, args);
       }
       return this;
     }

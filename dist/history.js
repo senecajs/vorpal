@@ -11,7 +11,9 @@ var HISTORY_SIZE = 500;
 var temp = path.normalize(path.join(os.tmpdir(), '/.local_storage'));
 var DEFAULT_STORAGE_PATH = temp;
 
-var History = function History() {
+var History = function History(options) {
+  this._options = options || {};
+
   this._storageKey = undefined;
 
   // Prompt Command History
@@ -134,8 +136,7 @@ History.prototype.newCommand = function (cmd) {
   // Push into history.
   this._hist.push(cmd);
 
-  // Only persist history when not in mode
-  if (this._storageKey && !this._inMode) {
+  if (this._storageKey && (this._options.ignore_mode || !this._inMode)) {
     var persistedHistory = this._hist;
     var historyLen = this._hist.length;
     if (historyLen > HISTORY_SIZE) {
@@ -152,6 +153,10 @@ History.prototype.newCommand = function (cmd) {
  */
 
 History.prototype.enterMode = function () {
+  if (this._options.ignore_mode) {
+    return;
+  }
+
   // Reassign the command history to a
   // cache, replacing it with a blank
   // history for the mode.
@@ -167,6 +172,10 @@ History.prototype.enterMode = function () {
  */
 
 History.prototype.exitMode = function () {
+  if (this._options.ignore_mode) {
+    return;
+  }
+
   this._hist = this._histCache;
   this._histCtr = this._histCtrCache;
   this._histCache = [];

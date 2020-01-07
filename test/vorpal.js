@@ -27,7 +27,7 @@ var mute = function () {
   unmute = intercept(function (str) {
     stdout += str;
     return '';
-  });
+  }, console);
 }
 
 vorpal = Vorpal();
